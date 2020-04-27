@@ -1,0 +1,12 @@
+{
+    "proxy": "https://2n0t4dssdk.execute-api.us-east-1.amazonaws.com/dev",
+    "free_tier_max_options": 20,
+    "max_question_input_length": 250,
+    "max_options_input_length": 100,
+    "ip_identifier": "https://ipapi.co/json/",
+    "unlimited_security_type": 1,
+    "ip_specific_security_type": 2,
+    "google_recaptcha_sitekey" : "6LfF7-0UAAAAAHz6F1UDgSHeNEqfqJ0s2WnboqJx",
+    "google_recaptcha_privatekey": "6LfF7-0UAAAAAJAGcnsNRQEkOcYscGiubr2YuwJy",
+    "google_recaptcha_url": "https://www.google.com/recaptcha/api/siteverify"
+}
