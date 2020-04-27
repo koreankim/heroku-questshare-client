@@ -1,5 +1,5 @@
 {
-    "proxy": "https://2n0t4dssdk.execute-api.us-east-1.amazonaws.com/dev",
+    "proxy": "https://questshare-server.herokuapp.com/",
     "free_tier_max_options": 20,
     "max_question_input_length": 250,
     "max_options_input_length": 100,
