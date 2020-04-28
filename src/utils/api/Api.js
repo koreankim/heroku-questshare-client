@@ -1,5 +1,3 @@
-const CONFIG = require("../../config.json");
-
 export const sendDataWithOptions = async (path, requestOptions) => {
   const response = await fetch(process.env.REACT_APP_SERVER_PROXY + path, requestOptions);
   const data = await response.json();

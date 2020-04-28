@@ -5,11 +5,11 @@ import {
   Row,
   Col,
   Button,
-  Cascader,
   Modal,
   Form,
   Input,
   Radio,
+  Slider,
   Switch,
 } from "antd";
 import {
@@ -142,35 +142,6 @@ class QuestionForm extends React.Component {
 
   // Expiration date selection menu
   expirationSelectMenu = () => {
-    const expirationOptions = () => {
-      return [
-        {
-          value: 1,
-          label: "1 minute",
-        },
-        {
-          value: 5,
-          label: "5 minutes",
-        },
-        {
-          value: 10,
-          label: "10 minutes",
-        },
-        {
-          value: 30,
-          label: "30 minutes",
-        },
-        {
-          value: 60,
-          label: "1 hour",
-        },
-        {
-          value: 180,
-          label: "3 hours"
-        }
-      ];
-    };
-
     const EXP_TOOLTIP_MSG =
       "After this time period, responses will no longer be accepted.";
 
@@ -195,7 +166,17 @@ class QuestionForm extends React.Component {
               },
             ]}
           >
-            <Cascader options={expirationOptions()} />
+            <Slider
+              marks={{
+                1: "1 Minute",
+                60: "1 Hour",
+                120: "2 Hours",
+                180: "3 Hours",
+              }}
+              min={1}
+              max={180}
+              style={{ marginLeft: "35px", marginRight: "35px" }}
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -277,13 +258,13 @@ class QuestionForm extends React.Component {
             </span>
           }
         >
-            <Switch
-              onChange={onChange}
-              checkedChildren={<LockOutlined />}
-              unCheckedChildren={<UnlockOutlined />}
-              checked={this.state.recaptcha}
-              disabled={this.state.re_disabled}
-            />
+          <Switch
+            onChange={onChange}
+            checkedChildren={<LockOutlined />}
+            unCheckedChildren={<UnlockOutlined />}
+            checked={this.state.recaptcha}
+            disabled={this.state.re_disabled}
+          />
         </Form.Item>
       </Col>
     );
@@ -315,10 +296,9 @@ class QuestionForm extends React.Component {
     };
 
     const onCreate = (values) => {
-      // This is required because the security type automatically switches 
+      // This is required because the security type automatically switches
       // the captcha requirement and that change doesn't propagate
       values["recaptcha"] = this.state.recaptcha;
-
       const requestOptions = {
         method: "POST",
         headers: {
@@ -327,7 +307,7 @@ class QuestionForm extends React.Component {
         body: JSON.stringify({
           question: values["question"],
           options: values["options"],
-          disableTime: values["disableTime"],
+          disableTime: [values["disableTime"]],
           securityType: values["securityType"],
           recaptcha: values["recaptcha"],
         }),
