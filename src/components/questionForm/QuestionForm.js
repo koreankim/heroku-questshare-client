@@ -270,10 +270,13 @@ class QuestionForm extends React.Component {
           label={
             <span>
               <strong>CAPTCHA</strong>
+              <Tooltip title={RECAPTCHA_TOOLTIP_MSG}>
+                {" "}
+                <InfoCircleOutlined />
+              </Tooltip>
             </span>
           }
         >
-          <Tooltip title={RECAPTCHA_TOOLTIP_MSG}>
             <Switch
               onChange={onChange}
               checkedChildren={<LockOutlined />}
@@ -281,7 +284,6 @@ class QuestionForm extends React.Component {
               checked={this.state.recaptcha}
               disabled={this.state.re_disabled}
             />
-          </Tooltip>
         </Form.Item>
       </Col>
     );
