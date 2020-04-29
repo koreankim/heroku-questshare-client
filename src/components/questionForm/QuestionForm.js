@@ -11,6 +11,7 @@ import {
   Radio,
   Slider,
   Switch,
+  message,
 } from "antd";
 import {
   MinusCircleOutlined,
@@ -25,6 +26,7 @@ import { openNotification } from "../../modal/notification/Notification";
 const CONFIG = require("../../config.json");
 
 const DEFAULT_SECURITY_TYPE = CONFIG["ip_specific_security_type"];
+const MESSAGE_KEY = "updateable url generating state";
 
 class QuestionForm extends React.Component {
   constructor(props) {
@@ -274,10 +276,14 @@ class QuestionForm extends React.Component {
     const q_url = window.location.host + "/questions/" + data;
 
     openNotification(
-      `Your QuestShare URL`,
+      `Your QuestShareable URL`,
       <CopyToClipboard text={q_url}>
         <span>
-          {q_url} <CopyOutlined style={{ fontSize: "14px" }} />
+          {q_url}{" "}
+          <CopyOutlined
+            style={{ fontSize: "14px", cursor: "pointer" }}
+            onClick={() => message.success({ content: "Copied!", duration: 2 })}
+          />
         </span>
       </CopyToClipboard>,
       0
@@ -296,6 +302,11 @@ class QuestionForm extends React.Component {
     };
 
     const onCreate = (values) => {
+      message.loading({
+        content: "Generating your QuestShareable URL...",
+        MESSAGE_KEY,
+      });
+
       // This is required because the security type automatically switches
       // the captcha requirement and that change doesn't propagate
       values["recaptcha"] = this.state.recaptcha;
@@ -314,7 +325,8 @@ class QuestionForm extends React.Component {
       };
       sendDataWithOptions("/createquestion", requestOptions)
         .then((data) => {
-          return this.displayQuestionFormUrlPopup(data);
+          message.success({ content: "Done!", MESSAGE_KEY, duration: 2 });
+          this.displayQuestionFormUrlPopup(data);
         })
         .catch((error) => {
           console.error("There was an error!", error);

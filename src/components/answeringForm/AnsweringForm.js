@@ -1,5 +1,14 @@
 import React from "react";
-import { Row, Col, Statistic, Radio, Form, Button, Divider } from "antd";
+import {
+  Row,
+  Col,
+  Statistic,
+  Radio,
+  Form,
+  Button,
+  Divider,
+  message,
+} from "antd";
 import { sendDataWithOptions } from "../../utils/api/Api";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -187,6 +196,7 @@ class AnsweringForm extends React.Component {
           this.setState({
             submitting: false,
           });
+          message.success({ content: "Successfully Submitted!", duration: 2 });
         })
         .catch((error) => {
           console.error("There was an error submitting your response!", error);
